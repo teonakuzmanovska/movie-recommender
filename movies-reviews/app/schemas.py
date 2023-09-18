@@ -21,6 +21,6 @@ class ReviewCreate(ReviewBase):
 class Review(ReviewBase):
     id: int
     movie_id: int
-    # movie: Movie
+    movie: dict
     class Config:
         orm_mode = True

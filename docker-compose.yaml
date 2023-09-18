@@ -18,6 +18,8 @@ services:
       - broker
     ports:
       - 8000:8000
+    networks:
+      - movie-network
   reviews_service:
     build:
       context: ./movies-reviews
@@ -35,6 +37,8 @@ services:
       - broker
     ports:
       - 8001:8001
+    networks:
+      - movie-network
     
   movie_db:
     image: postgres:12.1-alpine
@@ -44,6 +48,8 @@ services:
       - POSTGRES_DB=moviesdb
     ports:
       - 5432:5432
+    networks:
+      - movie-network
   zookeeper:
         image: confluentinc/cp-zookeeper:7.3.2
         container_name: zookeeper
@@ -73,3 +79,6 @@ services:
             interval: 5s
             timeout: 10s
             retries: 10
+
+networks:
+  movie-network:
