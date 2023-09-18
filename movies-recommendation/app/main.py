@@ -1,18 +1,15 @@
 from fastapi import FastAPI
 import uvicorn
-from app.rest import router as reviews_router
-from app.database import Base, engine
+from app.rest import router as recommendations_router
 from dotenv import load_dotenv
 
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(
-    title="Reviews",
+    title="Recommendations",
 )
 
-app.include_router(reviews_router, prefix="/reviews", tags=["reviews"])
+app.include_router(recommendations_router, prefix="/recommendations", tags=["recommendations"])
 
 if __name__ == "__main__":
     load_dotenv()
-    uvicorn.run(app, host="localhost", port=8001, log_level="info")
+    uvicorn.run(app, host="localhost", port=8002, log_level="info")
     

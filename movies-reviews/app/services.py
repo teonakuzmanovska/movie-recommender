@@ -4,12 +4,6 @@ from sqlalchemy.orm import Session
 import requests
 
 def get_reviews(db: Session, offset: int = 0, limit: int = 100):
-    movie_url = f"http://localhost:8000/movies-crud/movies/:id"
-    movie_response = requests.get(movie_url)
-    print(movie_response)
-    if movie_response.status_code != 200:
-        raise HTTPException(status_code=404, detail="Movie not found")
-    movie = movie_response.json()
     return db.query(Review).offset(offset).limit(limit).all()
 
 def add_review(db: Session, review):

@@ -10,7 +10,7 @@ app = FastAPI(
     title="Reviews",
 )
 
-app.include_router(reviews_router, prefix="/reviews", tags=["reviews"])
+app.include_router(reviews_router, prefix="/movies-reviews", tags=["reviews"])
 
 if __name__ == "__main__":
     load_dotenv()

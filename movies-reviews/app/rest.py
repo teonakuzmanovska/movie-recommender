@@ -10,7 +10,6 @@ from app.services import get_reviews, update_review_by_id, add_review, delete_re
 router = APIRouter(tags=["reviews"])
 
 @router.get("/reviews", response_model=list[Review])
-
 async def get_all_reviews(db : Session = Depends(get_db), offset: int = 0, limit: int = 100):
     return get_reviews(db, offset=offset, limit=limit)
 
