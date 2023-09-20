@@ -6,6 +6,11 @@ COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
+# Set environment variables for Keycloak configuration
+ENV KEYCLOAK_REALM=movies-reviews
+ENV KEYCLOAK_SERVER_URL=http://keycloak:8080/auth/realms/movies-reviews
+ENV KEYCLOAK_CLIENT_ID=movies-reviews-client
+
 COPY . .
 
 ENTRYPOINT ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8001"]

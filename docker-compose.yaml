@@ -56,5 +56,38 @@ services:
     networks:
       - movie-network
 
+  keycloak:
+    image: jboss/keycloak
+    environment:
+      - KEYCLOAK_USER:admin
+      - KEYCLOAK_PASSWORD:admin
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=movie_db  # Use the name of the database service
+      - DB_PORT=5432
+      - DB_DATABASE=moviesdb  # Use the same database name as my existing services
+      - DB_USER=postgres  # Use the same database user as my existing services
+      - DB_PASSWORD=postgres
+      - PROXY_ADDRESS_FORWARDING=true
+    depends_on:
+      - movie_db
+    ports:
+      - 8080:8080
+    networks:
+      - movie-network
+
+  # keycloak:
+  #   image: jboss/keycloak:latest
+  #   environment:
+  #     - KEYCLOAK_USER=admin
+  #     - KEYCLOAK_PASSWORD=admin
+  #     - DB_VENDOR=POSTGRES
+  #   #  KEYCLOAK_USER: admin     # Set your desired Keycloak admin username
+  #   #  KEYCLOAK_PASSWORD: admin # Set your desired Keycloak admin password
+  #   #  DB_VENDOR=POSTGRES
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - movie-network
+
 networks:
   movie-network:
