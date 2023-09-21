@@ -1,4 +1,8 @@
-version: '3.7'
+version: '3.9'
+
+networks:
+  movie-network:
+    driver: bridge
 
 services:
   movie_service:
@@ -13,10 +17,11 @@ services:
       DB_NAME: moviesdb
     depends_on:
       - movie_db
-    ports:
-      - 8000:8000
+    # ports:
+    #   - 8003:8000
     networks:
       - movie-network
+
   reviews_service:
     build:
       context: ./movies-reviews
@@ -29,8 +34,8 @@ services:
       DB_NAME: moviesdb
     depends_on:
       - movie_db
-    ports:
-      - 8001:8001
+    # ports:
+    #   - 8004:8000
     networks:
       - movie-network
 
@@ -40,8 +45,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - movie_db
-    ports:
-      - 8002:8002
+    # ports:
+    #   - 8005:8000
     networks:
       - movie-network
     
@@ -56,5 +61,23 @@ services:
     networks:
       - movie-network
 
-networks:
-  movie-network:
+  kong:
+    image: kong:latest
+    environment:
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/etc/kong/kong.yml
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001
+    volumes:
+      - ./kong.yml:/etc/kong/kong.yml
+    ports:
+      - 8000:8000
+      - 8443:8443
+      - 8001:8001
+      - 8444:8444
+    networks:
+      - movie-network
+

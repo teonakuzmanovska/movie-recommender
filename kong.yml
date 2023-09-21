@@ -1,0 +1,23 @@
+_format_version: "1.1"
+services:
+  - name: movie-service
+    url: http://movie_service:8003
+    routes:
+      - name: movie-route
+        paths:
+          - /movies
+
+  - name: reviews-service
+    url: http://reviews_service:8004
+    routes:
+      - name: reviews-route
+        paths:
+          - /reviews
+
+  - name: recommendation-service
+    url: http://recommendation_service:8005
+    routes:
+      - name: recommendation-route
+        paths:
+          - /recommendations
+
